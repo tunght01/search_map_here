@@ -41,64 +41,69 @@ class SearchLocationPageState extends State<SearchLocationPage> {
             body: Column(
               children: [
                 Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    child: TextFormField(
-                      controller: _searchController,
-                      onChanged: (value) {
-                        _searchCubit.searchProductByName(
-                          value,
-                          locationCubit.state.currentPosition?.longitude.toString() ?? '0.0',
-                          locationCubit.state.currentPosition?.latitude.toString() ?? '0.0',
-                        );
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Enter keyword',
-                        hintStyle: TextStyle(color: Colors.grey[600]),
-                        prefixIcon: state.isLoading
-                            ? Transform.scale(
-                                scale: 0.5,
-                                child: const CircularProgressIndicator(),
-                              )
-                            : const Icon(Icons.search, color: Colors.black),
-                        suffixIcon: _searchController.text.isNotEmpty
-                            ? IconButton(
-                                icon: const Icon(Icons.clear, color: Colors.black),
-                                onPressed: () {
-                                  _searchController.clear();
-                                  _searchCubit.clearSearch();
-                                },
-                              )
-                            : null,
-                        fillColor: Colors.white,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(
-                            color: Colors.grey[300]!,
-                            width: 1.5,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(
-                            color: Colors.grey,
-                            width: 2.0,
-                          ),
+                  color: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: TextFormField(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      _searchCubit.searchProductByName(
+                        value,
+                        locationCubit.state.currentPosition?.longitude.toString() ?? '0.0',
+                        locationCubit.state.currentPosition?.latitude.toString() ?? '0.0',
+                      );
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Enter keyword',
+                      hintStyle: TextStyle(color: Colors.grey[600]),
+                      prefixIcon: state.isLoading
+                          ? Transform.scale(
+                              scale: 0.5,
+                              child: const CircularProgressIndicator(),
+                            )
+                          : const Icon(Icons.search, color: Colors.black),
+                      suffixIcon: _searchController.text.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.clear, color: Colors.black),
+                              onPressed: () {
+                                _searchController.clear();
+                                _searchCubit.clearSearch();
+                              },
+                            )
+                          : null,
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide(
+                          color: Colors.grey[300]!,
+                          width: 1.5,
                         ),
                       ),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(
+                          color: Colors.grey,
+                          width: 2.0,
+                        ),
                       ),
-                      keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.search,
-                    )),
+                    ),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16.0,
+                    ),
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.search,
+                  ),
+                ),
                 Expanded(
                   child: state.isLoading
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
                       : state.error.isNotEmpty
-                          ? Center(child: Text(state.error))
+                          ? Center(
+                              child: Text(state.error),
+                            )
                           : state.data != null && state.data!.isNotEmpty
                               ? ListView.separated(
                                   itemCount: state.data!.length,
@@ -117,8 +122,10 @@ class SearchLocationPageState extends State<SearchLocationPage> {
                                     height: 1,
                                   ),
                                 )
-                              : const Center(child: Text('Vui lòng nhập địa chỉ!')),
-                )
+                              : const Center(
+                                  child: Text('Vui lòng nhập địa chỉ!'),
+                                ),
+                ),
               ],
             ),
           ),

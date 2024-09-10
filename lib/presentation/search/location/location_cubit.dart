@@ -7,7 +7,6 @@ part 'location_state.dart';
 
 @injectable
 class LocationCubit extends Cubit<LocationState> {
-  Position? _position;
   LocationCubit() : super(const LocationState());
 
   Future<void> determinePosition() async {
@@ -37,7 +36,6 @@ class LocationCubit extends Cubit<LocationState> {
       }
 
       Position position = await Geolocator.getCurrentPosition();
-      _position = position;
       emit(LocationState(currentPosition: position));
     } catch (e) {
       emit(LocationState(errorMessage: e.toString()));

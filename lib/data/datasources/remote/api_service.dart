@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:search_map_nws/data/dto/location_dto.dart';
 import 'package:search_map_nws/global/network/networking_factory.dart';
@@ -32,12 +31,6 @@ class ApiService extends RestClient {
           'at': '$log,$lat',
           'apiKey': _apiKey,
         },
-        options: Options(
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-        ),
       );
 
       return BaseResponseList.fromJson(
