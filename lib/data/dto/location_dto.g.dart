@@ -6,85 +6,89 @@ part of 'location_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Items _$ItemsFromJson(Map<String, dynamic> json) => Items(
-      title: json['title'] as String?,
-      id: json['id'] as String?,
-      resultType: json['resultType'] as String?,
-      address: json['address'] == null
+ItemsDto _$ItemsDtoFromJson(Map<String, dynamic> json) => ItemsDto(
+      json['address'] == null
           ? null
-          : Address.fromJson(json['address'] as Map<String, dynamic>),
-      position: json['position'] == null
+          : AddressDto.fromJson(json['address'] as Map<String, dynamic>),
+      json['highlights'] == null
           ? null
-          : Position.fromJson(json['position'] as Map<String, dynamic>),
-      mapView: json['mapView'] == null
+          : HighlightsDto.fromJson(json['highlights'] as Map<String, dynamic>),
+      json['id'] as String?,
+      json['mapView'] == null
           ? null
-          : MapView.fromJson(json['mapView'] as Map<String, dynamic>),
-      highlights: json['highlights'] == null
+          : MapViewDto.fromJson(json['mapView'] as Map<String, dynamic>),
+      json['position'] == null
           ? null
-          : Highlights.fromJson(json['highlights'] as Map<String, dynamic>),
+          : PositionDto.fromJson(json['position'] as Map<String, dynamic>),
+      json['resultType'] as String?,
+      json['title'] as String?,
     );
 
-Map<String, dynamic> _$ItemsToJson(Items instance) => <String, dynamic>{
-      'title': instance.title,
-      'id': instance.id,
-      'resultType': instance.resultType,
+Map<String, dynamic> _$ItemsDtoToJson(ItemsDto instance) => <String, dynamic>{
       'address': instance.address,
-      'position': instance.position,
+      'id': instance.id,
       'mapView': instance.mapView,
+      'position': instance.position,
+      'resultType': instance.resultType,
+      'title': instance.title,
       'highlights': instance.highlights,
     };
 
-Address _$AddressFromJson(Map<String, dynamic> json) => Address(
-      label: json['label'] as String?,
+AddressDto _$AddressDtoFromJson(Map<String, dynamic> json) => AddressDto(
+      json['label'] as String?,
     );
 
-Map<String, dynamic> _$AddressToJson(Address instance) => <String, dynamic>{
+Map<String, dynamic> _$AddressDtoToJson(AddressDto instance) =>
+    <String, dynamic>{
       'label': instance.label,
     };
 
-Position _$PositionFromJson(Map<String, dynamic> json) => Position(
+PositionDto _$PositionDtoFromJson(Map<String, dynamic> json) => PositionDto(
       lat: (json['lat'] as num?)?.toDouble(),
       lng: (json['lng'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$PositionToJson(Position instance) => <String, dynamic>{
+Map<String, dynamic> _$PositionDtoToJson(PositionDto instance) =>
+    <String, dynamic>{
       'lat': instance.lat,
       'lng': instance.lng,
     };
 
-MapView _$MapViewFromJson(Map<String, dynamic> json) => MapView(
+MapViewDto _$MapViewDtoFromJson(Map<String, dynamic> json) => MapViewDto(
       west: (json['west'] as num?)?.toDouble(),
       south: (json['south'] as num?)?.toDouble(),
       east: (json['east'] as num?)?.toDouble(),
       north: (json['north'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$MapViewToJson(MapView instance) => <String, dynamic>{
-      'west': instance.west,
-      'south': instance.south,
+Map<String, dynamic> _$MapViewDtoToJson(MapViewDto instance) =>
+    <String, dynamic>{
       'east': instance.east,
       'north': instance.north,
+      'south': instance.south,
+      'west': instance.west,
     };
 
-Highlights _$HighlightsFromJson(Map<String, dynamic> json) => Highlights(
+HighlightsDto _$HighlightsDtoFromJson(Map<String, dynamic> json) =>
+    HighlightsDto(
       title: (json['title'] as List<dynamic>?)
-          ?.map((e) => HighlightItem.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => HighlightItemDto.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$HighlightsToJson(Highlights instance) =>
+Map<String, dynamic> _$HighlightsDtoToJson(HighlightsDto instance) =>
     <String, dynamic>{
       'title': instance.title,
     };
 
-HighlightItem _$HighlightItemFromJson(Map<String, dynamic> json) =>
-    HighlightItem(
+HighlightItemDto _$HighlightItemDtoFromJson(Map<String, dynamic> json) =>
+    HighlightItemDto(
       start: (json['start'] as num?)?.toInt(),
       end: (json['end'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$HighlightItemToJson(HighlightItem instance) =>
+Map<String, dynamic> _$HighlightItemDtoToJson(HighlightItemDto instance) =>
     <String, dynamic>{
-      'start': instance.start,
       'end': instance.end,
+      'start': instance.start,
     };

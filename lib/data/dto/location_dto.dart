@@ -1,82 +1,106 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:search_map_nws/domain/entities/location_model.dart';
 
 part 'location_dto.g.dart';
 
 @JsonSerializable()
-class Items {
-  final String? title;
+class ItemsDto extends ItemsModel {
+  factory ItemsDto.fromJson(Map<String, dynamic> json) => _$ItemsDtoFromJson(json);
+
+  ItemsDto(this.address, this.highlights, this.id, this.mapView, this.position, this.resultType,
+      this.title);
+
+  Map<String, dynamic> toJson() => _$ItemsDtoToJson(this);
+
+  @override
+  final AddressDto? address;
+
+  @override
   final String? id;
+
+  @override
+  final MapViewDto? mapView;
+
+  @override
+  final PositionDto? position;
+
+  @override
   final String? resultType;
-  final Address? address;
-  final Position? position;
-  final MapView? mapView;
-  final Highlights? highlights;
 
-  Items({
-    this.title,
-    this.id,
-    this.resultType,
-    this.address,
-    this.position,
-    this.mapView,
-    this.highlights,
-  });
+  @override
+  final String? title;
 
-  factory Items.fromJson(Map<String, dynamic> json) => _$ItemsFromJson(json);
-  Map<String, dynamic> toJson() => _$ItemsToJson(this);
+  @override
+  final HighlightsDto? highlights;
 }
 
 @JsonSerializable()
-class Address {
+class AddressDto extends AddressModel {
+  factory AddressDto.fromJson(Map<String, dynamic> json) => _$AddressDtoFromJson(json);
+
+  AddressDto(this.label);
+
+  Map<String, dynamic> toJson() => _$AddressDtoToJson(this);
+
+  @override
   final String? label;
-
-  Address({this.label});
-
-  factory Address.fromJson(Map<String, dynamic> json) => _$AddressFromJson(json);
-  Map<String, dynamic> toJson() => _$AddressToJson(this);
 }
 
 @JsonSerializable()
-class Position {
+class PositionDto extends PositionModel {
+  PositionDto({this.lat, this.lng});
+
+  factory PositionDto.fromJson(Map<String, dynamic> json) => _$PositionDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$PositionDtoToJson(this);
+
+  @override
   final double? lat;
+
+  @override
   final double? lng;
-
-  Position({this.lat, this.lng});
-
-  factory Position.fromJson(Map<String, dynamic> json) => _$PositionFromJson(json);
-  Map<String, dynamic> toJson() => _$PositionToJson(this);
 }
 
 @JsonSerializable()
-class MapView {
-  final double? west;
-  final double? south;
+class MapViewDto extends MapViewModel {
+  MapViewDto({this.west, this.south, this.east, this.north});
+
+  factory MapViewDto.fromJson(Map<String, dynamic> json) => _$MapViewDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$MapViewDtoToJson(this);
+
+  @override
   final double? east;
+
+  @override
   final double? north;
 
-  MapView({this.west, this.south, this.east, this.north});
+  @override
+  final double? south;
 
-  factory MapView.fromJson(Map<String, dynamic> json) => _$MapViewFromJson(json);
-  Map<String, dynamic> toJson() => _$MapViewToJson(this);
+  @override
+  final double? west;
 }
 
 @JsonSerializable()
-class Highlights {
-  final List<HighlightItem>? title;
+class HighlightsDto extends HighlightsModel {
+  HighlightsDto({this.title});
 
-  Highlights({this.title});
+  factory HighlightsDto.fromJson(Map<String, dynamic> json) => _$HighlightsDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$HighlightsDtoToJson(this);
 
-  factory Highlights.fromJson(Map<String, dynamic> json) => _$HighlightsFromJson(json);
-  Map<String, dynamic> toJson() => _$HighlightsToJson(this);
+  @override
+  final List<HighlightItemDto>? title;
 }
 
 @JsonSerializable()
-class HighlightItem {
-  final int? start;
+class HighlightItemDto extends HighlightItemModel {
+  HighlightItemDto({this.start, this.end});
+
+  factory HighlightItemDto.fromJson(Map<String, dynamic> json) => _$HighlightItemDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$HighlightItemDtoToJson(this);
+
+  @override
   final int? end;
 
-  HighlightItem({this.start, this.end});
-
-  factory HighlightItem.fromJson(Map<String, dynamic> json) => _$HighlightItemFromJson(json);
-  Map<String, dynamic> toJson() => _$HighlightItemToJson(this);
+  @override
+  final int? start;
 }

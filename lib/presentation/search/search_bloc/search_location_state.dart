@@ -6,6 +6,6 @@ abstract class SearchState with _$SearchState {
     @Default(false) bool isLoading,
     @Default('') String error,
     @Default('') String success,
-    List<Items>? data,
+    List<ItemsModel>? data,
   }) = _SearchState;
 }

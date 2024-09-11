@@ -19,7 +19,7 @@ mixin _$SearchState {
   bool get isLoading => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   String get success => throw _privateConstructorUsedError;
-  List<Items>? get data => throw _privateConstructorUsedError;
+  List<ItemsModel>? get data => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SearchStateCopyWith<SearchState> get copyWith =>
@@ -32,7 +32,8 @@ abstract class $SearchStateCopyWith<$Res> {
           SearchState value, $Res Function(SearchState) then) =
       _$SearchStateCopyWithImpl<$Res, SearchState>;
   @useResult
-  $Res call({bool isLoading, String error, String success, List<Items>? data});
+  $Res call(
+      {bool isLoading, String error, String success, List<ItemsModel>? data});
 }
 
 /// @nodoc
@@ -69,7 +70,7 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<Items>?,
+              as List<ItemsModel>?,
     ) as $Val);
   }
 }
@@ -82,7 +83,8 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       __$$SearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String error, String success, List<Items>? data});
+  $Res call(
+      {bool isLoading, String error, String success, List<ItemsModel>? data});
 }
 
 /// @nodoc
@@ -117,7 +119,7 @@ class __$$SearchStateImplCopyWithImpl<$Res>
       data: freezed == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<Items>?,
+              as List<ItemsModel>?,
     ));
   }
 }
@@ -129,7 +131,7 @@ class _$SearchStateImpl implements _SearchState {
       {this.isLoading = false,
       this.error = '',
       this.success = '',
-      final List<Items>? data})
+      final List<ItemsModel>? data})
       : _data = data;
 
   @override
@@ -141,9 +143,9 @@ class _$SearchStateImpl implements _SearchState {
   @override
   @JsonKey()
   final String success;
-  final List<Items>? _data;
+  final List<ItemsModel>? _data;
   @override
-  List<Items>? get data {
+  List<ItemsModel>? get data {
     final value = _data;
     if (value == null) return null;
     if (_data is EqualUnmodifiableListView) return _data;
@@ -184,7 +186,7 @@ abstract class _SearchState implements SearchState {
       {final bool isLoading,
       final String error,
       final String success,
-      final List<Items>? data}) = _$SearchStateImpl;
+      final List<ItemsModel>? data}) = _$SearchStateImpl;
 
   @override
   bool get isLoading;
@@ -193,7 +195,7 @@ abstract class _SearchState implements SearchState {
   @override
   String get success;
   @override
-  List<Items>? get data;
+  List<ItemsModel>? get data;
   @override
   @JsonKey(ignore: true)
   _$$SearchStateImplCopyWith<_$SearchStateImpl> get copyWith =>

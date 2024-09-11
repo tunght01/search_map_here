@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:search_map_nws/data/dto/location_dto.dart';
+import 'package:search_map_nws/domain/entities/location_model.dart';
 import 'package:search_map_nws/global/network/networking_factory.dart';
 import 'package:search_map_nws/global/network/response/base_response_list.dart';
 import 'package:search_map_nws/global/network/rest_client.dart';
@@ -18,7 +19,7 @@ class ApiService extends RestClient {
     dio = NetworkingFactory.createDio(baseUrl: url, isDebug: true);
   }
 
-  Future<BaseResponseList<Items>> searchLocation({
+  Future<BaseResponseList<ItemsModel>> searchLocation({
     required String query,
     required String lat,
     required String log,
@@ -35,7 +36,7 @@ class ApiService extends RestClient {
 
       return BaseResponseList.fromJson(
         response.data,
-        (json) => Items.fromJson(json as Map<String, dynamic>),
+        (json) => ItemsDto.fromJson(json as Map<String, dynamic>),
       );
     } catch (e) {
       throw handlerError(e);

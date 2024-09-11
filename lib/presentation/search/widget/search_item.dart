@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:search_map_nws/data/dto/location_dto.dart';
+import 'package:search_map_nws/domain/entities/location_model.dart';
+import 'package:search_map_nws/global/extentions/highlight_occurrences.dart';
 
 class SearchItem extends StatelessWidget {
-  const SearchItem({super.key, required this.data, required this.onTap});
+  const SearchItem({super.key, required this.data, required this.onTap, required this.query});
 
-  final Items data;
+  final ItemsModel data;
+  final String query;
   final VoidCallback onTap;
 
   @override
@@ -29,11 +31,17 @@ class SearchItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Title
-                    Text(
-                      data.title ?? 'Unknown Location',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black87,
+                    RichText(
+                      text: TextSpan(
+                        children: highlightOccurrences(
+                          source: data.title!,
+                          query: query,
+                          normalStyle: const TextStyle(color: Colors.black),
+                          highLightStyle: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ],

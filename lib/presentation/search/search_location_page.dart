@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_map_nws/di/di.dart';
+import 'package:search_map_nws/global/design_system/app_empty_data_widget.dart';
+import 'package:search_map_nws/global/design_system/app_error_widget.dart';
+import 'package:search_map_nws/global/design_system/app_loading_widget.dart';
 import 'package:search_map_nws/presentation/search/location/location_cubit.dart';
 import 'package:search_map_nws/presentation/search/search_bloc/search_location_cubit.dart';
 
@@ -16,7 +19,8 @@ class SearchLocationPage extends StatefulWidget {
 class SearchLocationPageState extends State<SearchLocationPage> {
   late TextEditingController _searchController;
   final SearchCubit _searchCubit = getIt.get<SearchCubit>();
-  final locationCubit = getIt.get<LocationCubit>();
+  final LocationCubit locationCubit = getIt.get<LocationCubit>();
+
   @override
   void initState() {
     super.initState();
@@ -32,18 +36,18 @@ class SearchLocationPageState extends State<SearchLocationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchCubit, SearchState>(
-      bloc: _searchCubit,
-      builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            backgroundColor: Colors.white,
-            body: Column(
-              children: [
-                Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: TextFormField(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: BlocBuilder<SearchCubit, SearchState>(
+                bloc: _searchCubit,
+                builder: (context, state) {
+                  return TextFormField(
                     controller: _searchController,
                     onChanged: (value) {
                       _searchCubit.searchProductByName(
@@ -93,44 +97,57 @@ class SearchLocationPageState extends State<SearchLocationPage> {
                     ),
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.search,
-                  ),
-                ),
-                Expanded(
-                  child: state.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : state.error.isNotEmpty
-                          ? Center(
-                              child: Text(state.error),
-                            )
-                          : state.data != null && state.data!.isNotEmpty
-                              ? ListView.separated(
-                                  itemCount: state.data!.length,
-                                  itemBuilder: (context, index) {
-                                    return SearchItem(
-                                      data: state.data![index],
-                                      onTap: () {
-                                        _searchCubit.openGoogleMap(
-                                            state.data![index].position!.lat!.toDouble(),
-                                            state.data![index].position!.lng!.toDouble());
-                                      },
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) => const Divider(
-                                    color: Color(0xffe4e4e4),
-                                    height: 1,
-                                  ),
-                                )
-                              : const Center(
-                                  child: Text('Vui lòng nhập địa chỉ!'),
-                                ),
-                ),
-              ],
+                  );
+                },
+              ),
             ),
-          ),
-        );
-      },
+            Expanded(
+              child: BlocBuilder<SearchCubit, SearchState>(
+                bloc: _searchCubit,
+                builder: (context, state) {
+                  if (state.isLoading) {
+                    return const AppLoadingWidget();
+                  }
+                  if (state.error.isNotEmpty) {
+                    return AppErrorWidget(
+                      state.error,
+                      tryAgain: () {},
+                    );
+                  }
+                  if (state.data != null && state.data!.isNotEmpty) {
+                    return ListView.separated(
+                      itemCount: state.data!.length,
+                      itemBuilder: (context, index) {
+                        return SearchItem(
+                          query: _searchController.text,
+                          data: state.data![index],
+                          onTap: () {
+                            _searchCubit.openGoogleMap(
+                              state.data![index].position!.lat!.toDouble(),
+                              state.data![index].position!.lng!.toDouble(),
+                            );
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) => const Divider(
+                        color: Color(0xffe4e4e4),
+                        height: 1,
+                      ),
+                    );
+                  }
+                  return const AppEmptyDataWidget(
+                    icon: Icon(
+                      Icons.ac_unit,
+                      color: Colors.white,
+                    ),
+                    title: 'Vui lòng nhập địa chỉ cần tìm',
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
